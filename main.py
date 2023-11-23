@@ -7,6 +7,11 @@ app = FastAPI()
 
 redis_client = redis.StrictRedis(host="0.0.0.0", port=6379, db=0, decode_responses=True)
 
+# TODO: Route to add bill
+# TODO: Route to delete bill
+# TODO: Route to update bill
+
+
 # Route to add an item
 @app.post("/items/{item_name}/{quantity}")
 def add_item(item_name: str, quantity: int) -> dict[str, ItemPayLoad]:
