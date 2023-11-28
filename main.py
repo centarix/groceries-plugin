@@ -1,13 +1,24 @@
+from datetime import date
 import redis
 from fastapi import FastAPI, HTTPException
 
-from models import ItemPayLoad
+from models import BillPayLoad, ItemPayLoad
 
 app = FastAPI()
 
 redis_client = redis.StrictRedis(host="0.0.0.0", port=6379, db=0, decode_responses=True)
 
 # TODO: Route to add bill
+@app.post("/bills/{bill_name}/{bill_totalamt}")
+def add_bill(bill_name: str, bill_totalamt: float) -> dict[str, BillPayLoad]:
+    if bill_totalamt <= 0:
+        raise HTTPException(status_code=400, detail="Amount must be greater than zero.")
+    
+    #Check if item already exists
+    return {
+        "bill": BillPayLoad(bill_id=1, bill_name=bill_name, bill_totalamt=bill_totalamt, bill_duedate=date.today(), bill_mindue=0)
+    }
+
 # TODO: Route to delete bill
 # TODO: Route to update bill
 
